@@ -10,12 +10,12 @@ function App() {
   return (
     <BrowserRouter>
       <Grid container>
-        <Grid item>
+        <Grid item xs={12}>
           <Paper>
             <Header />
           </Paper>
         </Grid>
-        <Grid item>
+        <Grid item xs={12}>
           <Paper color='#f6fdfc'>
             <Route exact path='/'>
               <Redirect to='/converter' />

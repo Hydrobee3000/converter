@@ -1,10 +1,34 @@
-import { Paper } from '@mui/material'
+import { AppBar, Breadcrumbs, Chip } from '@mui/material'
+import { emphasize, styled } from '@mui/system'
+import { NavLink } from 'react-router-dom'
+
+const StyledBreadcrumb = styled(Chip)(({ theme }) => {
+  const backgroundColor = '#f6fdfc'
+  return {
+    backgroundColor,
+    '&:hover, &:focus': {
+      backgroundColor: emphasize(backgroundColor, 0.06),
+    },
+    '&:active': {
+      backgroundColor: emphasize(backgroundColor, 0.12),
+    },
+  }
+})
 
 const Header = () => {
   return (
-    <Paper elevation={3}>
-      <h1>Header</h1>
-    </Paper>
+    <AppBar position='static'>
+      <Breadcrumbs style={{ display: 'flex', justifyContent: 'center', margin: '17px 0' }} aria-label='breadcrumb'>
+        <NavLink style={{ textDecoration: 'none' }} to='/converter'>
+          <StyledBreadcrumb component='a' label='Converter' />
+        </NavLink>
+        <NavLink style={{ textDecoration: 'none' }} to='/current-currency'>
+          <StyledBreadcrumb component='a' label='Current currency' />
+        </NavLink>
+      </Breadcrumbs>
+    </AppBar>
   )
 }
 export default Header
+
+//activeClassName={s.active}
