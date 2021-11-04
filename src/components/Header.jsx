@@ -1,5 +1,6 @@
-import { AppBar, Breadcrumbs, Chip } from '@mui/material'
+import { AppBar, Breadcrumbs, Chip, MenuItem, Select } from '@mui/material'
 import { emphasize, styled } from '@mui/system'
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
@@ -17,7 +18,7 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 
 const Header = () => {
   return (
-    <AppBar position='static'>
+    <AppBar position='static' style={{ display: 'flex' }}>
       <Breadcrumbs style={{ display: 'flex', justifyContent: 'center', margin: '17px 0' }} aria-label='breadcrumb'>
         <NavLink style={{ textDecoration: 'none' }} to='/converter'>
           <StyledBreadcrumb component='a' label='Converter' />
