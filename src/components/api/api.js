@@ -5,19 +5,21 @@ const instance = axios.create({
 })
 
 export const currencyAPI = {
-  getCurrencies() {
-    return instance.get(`https://api.fastforex.io/fetch-all?api_key=4556f97ae5-f5e4423ba4-r220aq`).then((response) => {
-      return response.data
-    })
+  getRateCurrencies(baseCurrency) {
+    return instance
+      .get(`https://api.fastforex.io/fetch-all?from=${baseCurrency}&api_key=4556f97ae5-f5e4423ba4-r220aq`)
+      .then((response) => {
+        return response.data
+      })
   },
 
-  getResult(fromCurrency, toCurrency, value) {
+  getResult(fromCurrency, toCurrency) {
     return instance
       .get(
-        `https://api.fastforex.io/convert?from=${fromCurrency}&to=${toCurrency}&amount=${value}&api_key=4556f97ae5-f5e4423ba4-r220aq`
+        `https://api.fastforex.io/convert?from=${fromCurrency}&to=${toCurrency}&amount=${80}&api_key=4556f97ae5-f5e4423ba4-r220aq`
       )
       .then((response) => {
-        console.log(response.data)
+        return response.data.result[toCurrency]
       })
   },
 }

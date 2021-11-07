@@ -1,5 +1,5 @@
 import { MenuItem, Paper, Select } from '@mui/material'
-import * as React from 'react'
+import React, { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -19,7 +19,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
   },
 }))
-
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
@@ -29,10 +28,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }))
-const SecondPage = () => {
-  const [baseCurrency, setBaseCurrency] = React.useState(['RUB'])
-  const [rate, setRate] = React.useState()
-  const currencies = useSelector((state) => state.currencyReducer.currencies)
+
+const SecondPage = (props) => {
+  const [baseCurrency, setBaseCurrency] = useState(props.baseCurrency)
+  const [rate, setRate] = useState()
+  // const currencies = useSelector((state) => state.currencyReducer.currencies)
+  const dispatch = useDispatch()
+  const currenciesRate = useSelector((store) => store.currency.currencies)
 
   React.useEffect(() => {
     axios
@@ -44,13 +46,13 @@ const SecondPage = () => {
   }, [])
   console.log(rate)
   // const array = []
-  // for (var key in currencies) {
-  //   array.push(Object(key) + ' : ' + Object(currencies[key]))
+  // for (var key in currenciesRate) {
+  //   array.push(Object(key) + ' : ' + Object(currenciesRate[key]))
   // }
 
-  // // for (var i in currencies) {
+  // // for (var i in currenciesRate) {
   // //   array.push(i)
-  // //   array.push(currencies[i])
+  // //   array.push(currenciesRate[i])
   // // }
   // console.log(array)
 
@@ -67,7 +69,9 @@ const SecondPage = () => {
                 style={{ marginRight: '10px', alignSelf: 'center', backgroundColor: 'white' }}
                 id='demo-simple-select'
                 value={baseCurrency}
-                onChange={(e) => setBaseCurrency(e.target.value)}>
+                // onChange={(e) => setBaseCurrency(e.target.value)}
+                // onChange={(e) => dispatch(setBaseCurrency(e.target.value))}
+              >
                 <MenuItem value={'RUB'}>RUB</MenuItem>
                 <MenuItem value={'USD'}>USD </MenuItem>
               </Select>
@@ -77,13 +81,13 @@ const SecondPage = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.keys(currencies).map((key, i) => (
+          {Object.keys(currenciesRate).map((key, i) => (
             <StyledTableRow key={key}>
               <StyledTableCell align='center' component='th' scope='row'>
                 {i}
               </StyledTableCell>
               <StyledTableCell align='center'>{key}</StyledTableCell>
-              <StyledTableCell align='center'>{currencies[key]}</StyledTableCell>
+              <StyledTableCell align='center'>{currenciesRate[key]}</StyledTableCell>
               <StyledTableCell align='center'>{baseCurrency}</StyledTableCell>
               <StyledTableCell align='center'>{key.result}</StyledTableCell>
             </StyledTableRow>

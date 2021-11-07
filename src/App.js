@@ -4,18 +4,25 @@ import { Redirect, Route } from 'react-router'
 import FirstPage from './components/FirstPage'
 import SecondPage from './components/SecondPage'
 import Header from './components/Header'
-import { BrowserRouter } from 'react-router-dom'
-import store from './redux/store'
-import { connect, Provider, useSelector } from 'react-redux'
-import React, { useEffect } from 'react'
-import { fetchCurrency } from './redux/appReducer'
+import { useComponentWillMount } from './components/common/ComponentWillMountHook'
+import { useDispatch, useSelector } from 'react-redux'
+import { setBaseCurrency } from './redux/currencyReducer'
 
 const App = (props) => {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-  // useEffect(() => {
-  //   props.getCurrency()
-  // }, [])
+  const setBaseCurrencyFromBrowLang = () => {
+    const lang = navigator.language || navigator.userLanguage
+    // console.log(lang)
+    if (lang === 'ru-RU') {
+      dispatch(setBaseCurrency('RUB'))
+    } else {
+      dispatch(setBaseCurrency('USD'))
+    }
+  }
+  const baseCurrency = useSelector((state) => state.currency.baseCurrency)
+
+  useComponentWillMount(setBaseCurrencyFromBrowLang)
 
   return (
     <Grid container>
@@ -29,30 +36,12 @@ const App = (props) => {
           <Route exact path='/'>
             <Redirect to='/converter' />
           </Route>
-          <Route path='/converter' render={() => <FirstPage />} />
-          <Route path='/current-currency' render={() => <SecondPage />} />
+          <Route path='/converter' render={() => <FirstPage baseCurrency={baseCurrency} />} />
+          <Route path='/current-currency' render={() => <SecondPage baseCurrency={baseCurrency} />} />
         </Paper>
       </Grid>
     </Grid>
   )
 }
 
-const mapStateToProps = (state) => ({
-  // allCurrencies: state.currencyReducer.allCurrencies,
-})
-
-let AppContainer = connect(mapStateToProps, { fetchCurrency })(App)
-
-const MainApp = (props) => {
-  return (
-    <React.StrictMode>
-      <BrowserRouter>
-        <Provider store={store}>
-          <AppContainer />
-        </Provider>
-      </BrowserRouter>
-    </React.StrictMode>
-  )
-}
-
-export default MainApp
+export default App

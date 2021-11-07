@@ -1,16 +1,28 @@
 import { Button, FormControl, MenuItem, Paper, Select, TextField } from '@mui/material'
 import axios from 'axios'
-import React, { useState, useEffect, useCallback } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchResult } from './../redux/currencyReducer'
+import { setBaseCurrency } from './../redux/currencyReducer'
 
-const FirstPage = () => {
-  const currencies = useSelector((state) => state.currencyReducer.currencies)
+const FirstPage = ({ baseCurrency }) => {
+  const dispatch = useDispatch()
+  const currencies = useSelector((state) => state.currency.currencies)
 
   const [value, setValue] = useState(0)
-  const [fromCurrency, setFromCurrency] = useState('RUB')
+  const [fromCurrency, setFromCurrency] = useState(baseCurrency)
   const [toCurrency, setToCurrency] = useState('USD')
   const [result, setResult] = useState(0)
-  let convertValue
+  let convertValue ///
+
+  // useEffect(() => {
+  //   dispatch(fetchTodos())
+  // }, [dispatch])
+
+  // const changeBaseCurrency = useCallback((e) => dispatch(setBaseCurrency())[dispatch])
+  //////////////////////////
+
+  // const onClick = useCallback(() => dispatch(fetchResult(fromCurrency, toCurrency)), [dispatch, fromCurrency, toCurrency])
 
   const onClick = useCallback(() => {
     axios
@@ -21,6 +33,7 @@ const FirstPage = () => {
         setResult(response.data.result[toCurrency])
       })
   }, [result, convertValue])
+
   return (
     <Paper style={{ height: '600px', backgroundColor: '#f6fdfc', display: 'flex', flexDirection: 'column' }}>
       <FormControl fullWidth>
@@ -30,7 +43,7 @@ const FirstPage = () => {
           label='Number'
           type='number'
           value={value}
-          onChange={(e) => setValue(Number(e.target.value))}
+          onChange={(e) => setValue(e.target.value)}
           InputLabelProps={{
             shrink: true,
           }}
@@ -38,8 +51,9 @@ const FirstPage = () => {
         <Select
           style={{ margin: '15px 0', width: '20%', alignSelf: 'center', backgroundColor: 'white' }}
           id='demo-simple-select'
-          value={fromCurrency}
-          onChange={(e) => setFromCurrency(e.target.value)}>
+          value={baseCurrency}
+          // onChange={(e) => setFromCurrency(e.target.value)}
+          onChange={(e) => dispatch(setBaseCurrency(e.target.value))}>
           <MenuItem value={'RUB'}>RUB</MenuItem>
           <MenuItem value={'USD'}>USD </MenuItem>
         </Select>
@@ -67,7 +81,9 @@ const FirstPage = () => {
         <Button
           style={{ margin: '10px 0', width: '10%', alignSelf: 'center', backgroundColor: 'white' }}
           variant='outlined'
-          onClick={onClick}>
+          onClick={onClick}
+          // onClick={onClick}
+        >
           Просмотр
         </Button>
         <TextField

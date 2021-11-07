@@ -1,8 +1,9 @@
-import { currencyAPI } from '../components/api/api'
-
-const FETCH_CURRENCIES = 'FETCH_CURRENCIES'
-const FETCH_CURRENCIES_SUCCESS = 'FETCH_CURRENCIES_SUCCESS'
+import { currencyAPI, profileAPI, usersAPI } from '../components/api/api'
+const SET_RESULT = 'SET_RESULT'
+const SET_CURRENCIES = 'SET_CURRENCIES'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+const SET_BASE_CURRENCY = 'SET_BASE_CURRENCY'
+const GET_CONVERT_RESULT = 'GET_CONVERT_RESULT'
 
 let initialState = {
   currencies: {
@@ -157,53 +158,57 @@ let initialState = {
     ZAR: 'South African Rand',
     ZMW: 'Zambian Kwacha',
   },
+  baseCurrency: null,
+  result: null,
   isFetching: true,
 }
 
 const currencyReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_CURRENCIES: {
+    case SET_BASE_CURRENCY: {
+      return { ...state, baseCurrency: action.baseCurrency }
+    }
+    case GET_CONVERT_RESULT: {
+      return { ...state, result: action.result }
+    }
+
+    case SET_CURRENCIES: {
       return {
         ...state,
-        currencies: action.results,
+        currencies: action.currencies,
       }
     }
-    case FETCH_CURRENCIES_SUCCESS:
-      return { value: state.value - 1 }
 
-    case TOGGLE_IS_FETCHING:
-      return { ...state, isFetching: action.isFetching }
+    case TOGGLE_IS_FETCHING: {
+      return {
+        ...state,
+        isFetching: action.isFetching,
+      }
+    }
+    case SET_RESULT: {
+      return {
+        ...state,
+        result: action.result,
+      }
+    }
 
     default:
       return state
   }
 }
-export const toggleIsFetching = (isFetching) => ({
-  type: TOGGLE_IS_FETCHING,
-  isFetching,
-})
-export const setCurency = (currencies) => ({ type: FETCH_CURRENCIES, currencies })
 
-export const fetchCurrencySuccess = (currencies) => {
-  return {
-    type: FETCH_CURRENCIES_SUCCESS,
-    currencies,
-  }
+export const setCurrencies = (currencies) => ({ type: SET_CURRENCIES, currencies })
+export const setResult = (result) => ({ type: SET_RESULT, result })
+export const setBaseCurrency = (baseCurrency) => ({ type: SET_BASE_CURRENCY, baseCurrency })
+
+export const fetchCurrencies = (currency) => async (dispatch) => {
+  let response = await currencyAPI.getRateCurrencies(currency)
+  dispatch(setCurrencies(response.data))
 }
 
-export const fetchCurrency = () => {
-  return async (dispatch) => {
-    dispatch(toggleIsFetching(true))
-
-    let data = await currencyAPI.getCurrencies()
-    dispatch(toggleIsFetching(false))
-    dispatch(setCurency(data))
-  }
+export const fetchResult = (fromCurrency, toCurrency) => async (dispatch) => {
+  let response = await currencyAPI.getResult(fromCurrency, toCurrency)
+  dispatch(setResult(response.data))
 }
-
-// export const currenciesFetchData = () => async (dispatch) => {
-//   const currencies = await currencyAPI.getRate()
-//   dispatch(currenciesFetchDataSuccess(currencies))
-// }
 
 export default currencyReducer
