@@ -13,10 +13,10 @@ export const currencyAPI = {
       })
   },
 
-  getResult(fromCurrency, toCurrency) {
+  getResult(baseCurrency, toCurrency, amount) {
     return instance
       .get(
-        `https://api.fastforex.io/convert?from=${fromCurrency}&to=${toCurrency}&amount=${80}&api_key=4556f97ae5-f5e4423ba4-r220aq`
+        `https://api.fastforex.io/convert?from=${baseCurrency}&to=${toCurrency}&amount=${amount}&api_key=4556f97ae5-f5e4423ba4-r220aq`
       )
       .then((response) => {
         return response.data.result[toCurrency]

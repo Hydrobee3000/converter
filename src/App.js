@@ -10,7 +10,6 @@ import { setBaseCurrency } from './redux/currencyReducer'
 
 const App = (props) => {
   const dispatch = useDispatch()
-
   // Установка валюты по-умолчанию в завизимости от языка браузера
   const setBaseCurrencyFromBrowLang = () => {
     const lang = navigator.language || navigator.userLanguage
@@ -22,6 +21,7 @@ const App = (props) => {
     }
   }
   const baseCurrency = useSelector((state) => state.currency.baseCurrency)
+  const currencies = useSelector((state) => state.currency.currencies)
 
   useComponentWillMount(setBaseCurrencyFromBrowLang)
 
@@ -37,8 +37,8 @@ const App = (props) => {
           <Route exact path='/'>
             <Redirect to='/converter' />
           </Route>
-          <Route path='/converter' render={() => <FirstPage baseCurrency={baseCurrency} />} />
-          <Route path='/current-currency' render={() => <SecondPage baseCurrency={baseCurrency} />} />
+          <Route path='/converter' render={() => <FirstPage baseCurrency={baseCurrency} currencies={currencies} />} />
+          <Route path='/current-currency' render={() => <SecondPage baseCurrency={baseCurrency} currencies={currencies} />} />
         </Paper>
       </Grid>
     </Grid>

@@ -2,18 +2,17 @@ import { Button, FormControl, MenuItem, Paper, Select, TextField } from '@mui/ma
 import axios from 'axios'
 import React, { useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchResult, setToCurrency } from './../redux/currencyReducer'
+import { getConvert, setAmount, setToCurrency } from './../redux/currencyReducer'
 import { setBaseCurrency } from './../redux/currencyReducer'
 
-const FirstPage = ({ baseCurrency }) => {
+const FirstPage = ({ baseCurrency, currencies }) => {
   const dispatch = useDispatch()
-  const currencies = useSelector((state) => state.currency.currencies)
   const toCurrency = useSelector((state) => state.currency.toCurrency)
-  const [value, setValue] = useState(0)
-  // const [fromCurrency, setFromCurrency] = useState(baseCurrency)
-  // const [toCurrency, setToCurrency] = useState('USD')
-  const [result, setResult] = useState(0)
-  let convertValue ///
+  const result = useSelector((state) => state.currency.result)
+  const amount = useSelector((state) => state.currency.amount)
+  // const [value, setValue] = useState(0)
+  // const [result, setResult] = useState(0)
+  // let convertValue ///
 
   // useEffect(() => {
   //   dispatch(fetchTodos())
@@ -22,17 +21,20 @@ const FirstPage = ({ baseCurrency }) => {
   // const changeBaseCurrency = useCallback((e) => dispatch(setBaseCurrency())[dispatch])
   //////////////////////////
 
-  // const onClick = useCallback(() => dispatch(fetchResult(fromCurrency, toCurrency)), [dispatch, fromCurrency, toCurrency])
+  const onClick = useCallback(
+    () => dispatch(getConvert(baseCurrency, toCurrency, amount)),
+    [dispatch, baseCurrency, toCurrency, amount]
+  )
 
-  const onClick = useCallback(() => {
-    axios
-      .get(
-        `https://api.fastforex.io/convert?from=${baseCurrency}&to=${toCurrency}&amount=${80}&api_key=4556f97ae5-f5e4423ba4-r220aq` //почему-то amount не может взять значение value
-      )
-      .then((response) => {
-        setResult(response.data.result[toCurrency])
-      })
-  }, [result, convertValue])
+  // const onClick = useCallback(() => {
+  //   axios
+  //     .get(
+  //       `https://api.fastforex.io/convert?from=${baseCurrency}&to=${toCurrency}&amount=${80}&api_key=4556f97ae5-f5e4423ba4-r220aq` //почему-то amount не может взять значение value
+  //     )
+  //     .then((response) => {
+  //       setResult(response.data.result[toCurrency])
+  //     })
+  // }, [result, convertValue])
 
   return (
     <Paper style={{ height: '600px', backgroundColor: '#f6fdfc', display: 'flex', flexDirection: 'column' }}>
@@ -42,8 +44,9 @@ const FirstPage = ({ baseCurrency }) => {
           id='outlined-number'
           label='Number'
           type='number'
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+          value={amount}
+          // onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => dispatch(setAmount(e.target.value))}
           InputLabelProps={{
             shrink: true,
           }}
@@ -69,7 +72,6 @@ const FirstPage = ({ baseCurrency }) => {
           style={{ margin: '15px 0', width: '20%', alignSelf: 'center', backgroundColor: 'white' }}
           id='demo-simple-select'
           value={toCurrency}
-          // onChange={(e) => setToCurrency(e.target.value)}>
           onChange={(e) => dispatch(setToCurrency(e.target.value))}>
           {/* Проходимся по всем валютам из стейта и отображаем их в поле выборы валюты в которую конвертируем */}
           {Object.keys(currencies).map((currency, i) => {

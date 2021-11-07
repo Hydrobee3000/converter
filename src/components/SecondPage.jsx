@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { setBaseCurrency } from '../redux/currencyReducer'
+import { getCurrencies, setBaseCurrency } from '../redux/currencyReducer'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,18 +33,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const SecondPage = ({ baseCurrency }) => {
   const dispatch = useDispatch()
   const currenciesRate = useSelector((store) => store.currency.currencies)
-  const [rate, setRate] = useState()
-  // const currencies = useSelector((state) => state.currencyReducer.currencies)
+  // const [rate, setRate] = useState()
 
-  useEffect(() => {
-    axios
-      .get(`https://api.fastforex.io/fetch-all?from=${baseCurrency}&api_key=4556f97ae5-f5e4423ba4-r220aq`)
-      .then(({ data }) => {
-        setRate(data.results)
-      })
-      .catch((error) => console.log(error))
-  }, [])
-  console.log(rate)
+  // useEffect(() => {
+  //   axios
+  //     .get(`https://api.fastforex.io/fetch-all?from=${baseCurrency}&api_key=4556f97ae5-f5e4423ba4-r220aq`)
+  //     .then(({ data }) => {
+  //       setRate(data.results)
+  //     })
+  //     .catch((error) => console.log(error))
+  // }, [])
+
+  useEffect(() => dispatch(getCurrencies(setBaseCurrency)), [])
+
+  // console.log(rate)
+
   // const array = []
   // for (var key in currenciesRate) {
   //   array.push(Object(key) + ' : ' + Object(currenciesRate[key]))
@@ -61,9 +64,9 @@ const SecondPage = ({ baseCurrency }) => {
       <Table sx={{ minWidth: 700 }} aria-label='customized table'>
         <TableHead>
           <TableRow>
-            <StyledTableCell align='center'>index</StyledTableCell>
-            <StyledTableCell align='center'>currency</StyledTableCell>
-            <StyledTableCell align='center'>name</StyledTableCell>
+            <StyledTableCell align='center'>Index</StyledTableCell>
+            <StyledTableCell align='center'>Currency</StyledTableCell>
+            <StyledTableCell align='center'>Name</StyledTableCell>
             <StyledTableCell align='center'>
               <Select
                 style={{ marginRight: '10px', alignSelf: 'center', backgroundColor: 'white' }}
@@ -75,9 +78,9 @@ const SecondPage = ({ baseCurrency }) => {
                 <MenuItem value={'RUB'}>RUB</MenuItem>
                 <MenuItem value={'USD'}>USD </MenuItem>
               </Select>
-              from
+              From
             </StyledTableCell>
-            <StyledTableCell align='center'>result</StyledTableCell>
+            <StyledTableCell align='center'>Result</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

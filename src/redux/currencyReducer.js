@@ -1,10 +1,10 @@
-import { currencyAPI, profileAPI, usersAPI } from '../components/api/api'
+import { currencyAPI } from '../components/api/api'
 const SET_RESULT = 'SET_RESULT'
 const SET_CURRENCIES = 'SET_CURRENCIES'
 const TO_CURRENCY = 'TO_CURRENCY'
+const SET_AMOUNT = 'SET_AMOUNT'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 const SET_BASE_CURRENCY = 'SET_BASE_CURRENCY'
-const GET_CONVERT_RESULT = 'GET_CONVERT_RESULT'
 
 let initialState = {
   currencies: {
@@ -160,7 +160,8 @@ let initialState = {
     ZMW: 'Zambian Kwacha',
   },
   baseCurrency: null,
-  toCurrency: null,
+  toCurrency: 'EUR',
+  amount: 0,
   result: null,
   isFetching: true,
 }
@@ -170,13 +171,16 @@ const currencyReducer = (state = initialState, action) => {
     case SET_BASE_CURRENCY: {
       return { ...state, baseCurrency: action.baseCurrency }
     }
-    case GET_CONVERT_RESULT: {
-      return { ...state, result: action.result }
-    }
     case SET_CURRENCIES: {
       return {
         ...state,
         currencies: action.currencies,
+      }
+    }
+    case SET_AMOUNT: {
+      return {
+        ...state,
+        amount: action.amount,
       }
     }
     case TO_CURRENCY: {
@@ -205,17 +209,23 @@ const currencyReducer = (state = initialState, action) => {
 
 export const setCurrencies = (currencies) => ({ type: SET_CURRENCIES, currencies })
 export const setResult = (result) => ({ type: SET_RESULT, result })
-export const setBaseCurrency = (baseCurrency) => ({ type: SET_BASE_CURRENCY, baseCurrency })
+export const setAmount = (amount) => ({ type: SET_AMOUNT, amount })
 export const setToCurrency = (toCurrency) => ({ type: TO_CURRENCY, toCurrency })
+export const setBaseCurrency = (baseCurrency) => ({ type: SET_BASE_CURRENCY, baseCurrency })
 
-export const fetchCurrencies = (currency) => async (dispatch) => {
-  let response = await currencyAPI.getRateCurrencies(currency)
-  dispatch(setCurrencies(response.data))
+//логика получения ставки всех валют валют относительно базовой валюты
+export const getCurrencies = (baseCurrency) => {
+  return async (dispatch) => {
+    let response = await currencyAPI.getRateCurrencies(baseCurrency)
+    dispatch(setCurrencies(response.data))
+  }
 }
-
-export const fetchResult = (fromCurrency, toCurrency) => async (dispatch) => {
-  let response = await currencyAPI.getResult(fromCurrency, toCurrency)
-  dispatch(setResult(response.data))
+//логика получения результата
+export const getConvert = (baseCurrency, toCurrency, amount) => {
+  return async (dispatch) => {
+    let response = await currencyAPI.getResult(baseCurrency, toCurrency, amount)
+    dispatch(setResult(response.data))
+  }
 }
 
 export default currencyReducer
