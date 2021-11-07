@@ -1,5 +1,5 @@
 import { MenuItem, Paper, Select } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { styled } from '@mui/material/styles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
+import { setBaseCurrency } from '../redux/currencyReducer'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -29,14 +30,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
-const SecondPage = (props) => {
-  const [baseCurrency, setBaseCurrency] = useState(props.baseCurrency)
-  const [rate, setRate] = useState()
-  // const currencies = useSelector((state) => state.currencyReducer.currencies)
+const SecondPage = ({ baseCurrency }) => {
   const dispatch = useDispatch()
   const currenciesRate = useSelector((store) => store.currency.currencies)
+  const [rate, setRate] = useState()
+  // const currencies = useSelector((state) => state.currencyReducer.currencies)
 
-  React.useEffect(() => {
+  useEffect(() => {
     axios
       .get(`https://api.fastforex.io/fetch-all?from=${baseCurrency}&api_key=4556f97ae5-f5e4423ba4-r220aq`)
       .then(({ data }) => {
@@ -71,7 +71,7 @@ const SecondPage = (props) => {
                 value={baseCurrency}
                 // onChange={(e) => setBaseCurrency(e.target.value)}
                 // onChange={(e) => dispatch(setBaseCurrency(e.target.value))}
-              >
+                onChange={(e) => dispatch(setBaseCurrency(e.target.value))}>
                 <MenuItem value={'RUB'}>RUB</MenuItem>
                 <MenuItem value={'USD'}>USD </MenuItem>
               </Select>

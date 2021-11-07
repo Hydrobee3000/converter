@@ -2,16 +2,16 @@ import { Button, FormControl, MenuItem, Paper, Select, TextField } from '@mui/ma
 import axios from 'axios'
 import React, { useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchResult } from './../redux/currencyReducer'
+import { fetchResult, setToCurrency } from './../redux/currencyReducer'
 import { setBaseCurrency } from './../redux/currencyReducer'
 
 const FirstPage = ({ baseCurrency }) => {
   const dispatch = useDispatch()
   const currencies = useSelector((state) => state.currency.currencies)
-
+  const toCurrency = useSelector((state) => state.currency.toCurrency)
   const [value, setValue] = useState(0)
-  const [fromCurrency, setFromCurrency] = useState(baseCurrency)
-  const [toCurrency, setToCurrency] = useState('USD')
+  // const [fromCurrency, setFromCurrency] = useState(baseCurrency)
+  // const [toCurrency, setToCurrency] = useState('USD')
   const [result, setResult] = useState(0)
   let convertValue ///
 
@@ -27,7 +27,7 @@ const FirstPage = ({ baseCurrency }) => {
   const onClick = useCallback(() => {
     axios
       .get(
-        `https://api.fastforex.io/convert?from=${fromCurrency}&to=${toCurrency}&amount=${80}&api_key=4556f97ae5-f5e4423ba4-r220aq` //почему-то amount не может взять значение value
+        `https://api.fastforex.io/convert?from=${baseCurrency}&to=${toCurrency}&amount=${80}&api_key=4556f97ae5-f5e4423ba4-r220aq` //почему-то amount не может взять значение value
       )
       .then((response) => {
         setResult(response.data.result[toCurrency])
@@ -52,8 +52,8 @@ const FirstPage = ({ baseCurrency }) => {
           style={{ margin: '15px 0', width: '20%', alignSelf: 'center', backgroundColor: 'white' }}
           id='demo-simple-select'
           value={baseCurrency}
-          // onChange={(e) => setFromCurrency(e.target.value)}
           onChange={(e) => dispatch(setBaseCurrency(e.target.value))}>
+          {/* Меняем базовую валюту при выборе */}
           <MenuItem value={'RUB'}>RUB</MenuItem>
           <MenuItem value={'USD'}>USD </MenuItem>
         </Select>
@@ -69,7 +69,9 @@ const FirstPage = ({ baseCurrency }) => {
           style={{ margin: '15px 0', width: '20%', alignSelf: 'center', backgroundColor: 'white' }}
           id='demo-simple-select'
           value={toCurrency}
-          onChange={(e) => setToCurrency(e.target.value)}>
+          // onChange={(e) => setToCurrency(e.target.value)}>
+          onChange={(e) => dispatch(setToCurrency(e.target.value))}>
+          {/* Проходимся по всем валютам из стейта и отображаем их в поле выборы валюты в которую конвертируем */}
           {Object.keys(currencies).map((currency, i) => {
             return (
               <MenuItem value={currency} key={i}>
@@ -81,9 +83,7 @@ const FirstPage = ({ baseCurrency }) => {
         <Button
           style={{ margin: '10px 0', width: '10%', alignSelf: 'center', backgroundColor: 'white' }}
           variant='outlined'
-          onClick={onClick}
-          // onClick={onClick}
-        >
+          onClick={onClick}>
           Просмотр
         </Button>
         <TextField

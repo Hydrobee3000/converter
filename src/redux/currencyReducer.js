@@ -1,6 +1,7 @@
 import { currencyAPI, profileAPI, usersAPI } from '../components/api/api'
 const SET_RESULT = 'SET_RESULT'
 const SET_CURRENCIES = 'SET_CURRENCIES'
+const TO_CURRENCY = 'TO_CURRENCY'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 const SET_BASE_CURRENCY = 'SET_BASE_CURRENCY'
 const GET_CONVERT_RESULT = 'GET_CONVERT_RESULT'
@@ -159,6 +160,7 @@ let initialState = {
     ZMW: 'Zambian Kwacha',
   },
   baseCurrency: null,
+  toCurrency: null,
   result: null,
   isFetching: true,
 }
@@ -171,14 +173,18 @@ const currencyReducer = (state = initialState, action) => {
     case GET_CONVERT_RESULT: {
       return { ...state, result: action.result }
     }
-
     case SET_CURRENCIES: {
       return {
         ...state,
         currencies: action.currencies,
       }
     }
-
+    case TO_CURRENCY: {
+      return {
+        ...state,
+        toCurrency: action.toCurrency,
+      }
+    }
     case TOGGLE_IS_FETCHING: {
       return {
         ...state,
@@ -200,6 +206,7 @@ const currencyReducer = (state = initialState, action) => {
 export const setCurrencies = (currencies) => ({ type: SET_CURRENCIES, currencies })
 export const setResult = (result) => ({ type: SET_RESULT, result })
 export const setBaseCurrency = (baseCurrency) => ({ type: SET_BASE_CURRENCY, baseCurrency })
+export const setToCurrency = (toCurrency) => ({ type: TO_CURRENCY, toCurrency })
 
 export const fetchCurrencies = (currency) => async (dispatch) => {
   let response = await currencyAPI.getRateCurrencies(currency)

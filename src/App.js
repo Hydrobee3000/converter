@@ -11,9 +11,10 @@ import { setBaseCurrency } from './redux/currencyReducer'
 const App = (props) => {
   const dispatch = useDispatch()
 
+  // Установка валюты по-умолчанию в завизимости от языка браузера
   const setBaseCurrencyFromBrowLang = () => {
     const lang = navigator.language || navigator.userLanguage
-    // console.log(lang)
+
     if (lang === 'ru-RU') {
       dispatch(setBaseCurrency('RUB'))
     } else {
