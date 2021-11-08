@@ -22,6 +22,9 @@ const App = (props) => {
   }
   const baseCurrency = useSelector((state) => state.currency.baseCurrency)
   const currencies = useSelector((state) => state.currency.currencies)
+  const rateCurrencies = useSelector((state) => state.currency.rateCurrencies)
+  const convertingInProgress = useSelector((state) => state.currency.isFetching)
+  console.log(rateCurrencies)
 
   useComponentWillMount(setBaseCurrencyFromBrowLang)
 
@@ -29,7 +32,7 @@ const App = (props) => {
     <Grid container>
       <Grid item xs={12}>
         <Paper>
-          <Header />
+          <Header baseCurrency={baseCurrency} />
         </Paper>
       </Grid>
       <Grid item xs={12}>
@@ -37,8 +40,21 @@ const App = (props) => {
           <Route exact path='/'>
             <Redirect to='/converter' />
           </Route>
-          <Route path='/converter' render={() => <FirstPage baseCurrency={baseCurrency} currencies={currencies} />} />
-          <Route path='/current-currency' render={() => <SecondPage baseCurrency={baseCurrency} currencies={currencies} />} />
+          <Route
+            path='/converter'
+            render={() => (
+              <FirstPage
+                baseCurrency={baseCurrency}
+                currencies={currencies}
+                rateCurrencies={rateCurrencies}
+                convertingInProgress={convertingInProgress}
+              />
+            )}
+          />
+          <Route
+            path='/current-currency'
+            render={() => <SecondPage baseCurrency={baseCurrency} currencies={currencies} rateCurrencies={rateCurrencies} />}
+          />
         </Paper>
       </Grid>
     </Grid>
