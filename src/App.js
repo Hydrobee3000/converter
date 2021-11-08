@@ -10,21 +10,21 @@ import { setBaseCurrency } from './redux/currencyReducer'
 
 const App = (props) => {
   const dispatch = useDispatch()
+
   // Установка валюты по-умолчанию в завизимости от языка браузера
   const setBaseCurrencyFromBrowLang = () => {
     const lang = navigator.language || navigator.userLanguage
-
     if (lang === 'ru-RU') {
       dispatch(setBaseCurrency('RUB'))
     } else {
       dispatch(setBaseCurrency('USD'))
     }
   }
+
   const baseCurrency = useSelector((state) => state.currency.baseCurrency)
   const currencies = useSelector((state) => state.currency.currencies)
   const rateCurrencies = useSelector((state) => state.currency.rateCurrencies)
   const convertingInProgress = useSelector((state) => state.currency.isFetching)
-  console.log(rateCurrencies)
 
   useComponentWillMount(setBaseCurrencyFromBrowLang)
 
