@@ -159,7 +159,7 @@ let initialState = {
     { name: 'XPF', rate: null, fullName: 'CFP Franc' },
     { name: 'YER', rate: null, fullName: 'Yemeni Rial' },
     { name: 'ZAR', rate: null, fullName: 'South African Rand' },
-    { name: 'ZMW', rate: null, fullName: 'Zambian Kwacha}' },
+    { name: 'ZMW', rate: null, fullName: 'Zambian Kwacha' },
   ],
   rateCurrencies: null,
   baseCurrency: null,
