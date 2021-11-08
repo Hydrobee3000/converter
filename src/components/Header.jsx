@@ -38,13 +38,13 @@ const Header = ({ baseCurrency }) => {
             }}
             style={{ textDecoration: 'none' }}
             to='/current-currency'>
-            <StyledBreadcrumb component='a' label='Current currency' />
+            <StyledBreadcrumb component='a' label='Сurrent rate' />
           </NavLink>
           <Select
             style={{
               marginLeft: 'auto',
               width: '5em',
-              height: '2.5em',
+              height: '2em',
               alignSelf: 'center',
               backgroundColor: 'white',
             }}

@@ -66,7 +66,7 @@ const SecondPage = ({ baseCurrency, currencies }) => {
         <TableHead>
           <TableRow>
             <StyledTableCell align='center'>From</StyledTableCell>
-            <StyledTableCell align='center'>Result</StyledTableCell>
+            <StyledTableCell align='center'>Rate</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
