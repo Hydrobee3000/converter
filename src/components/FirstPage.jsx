@@ -27,9 +27,10 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
       <Box component='form'>
         <FormControl fullWidth>
           <TextField
+            placeholder='Enter the number'
             style={{ margin: '30px 0 10px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' }}
             id='outlined-number'
-            label='Number'
+            label='Amount'
             type='number'
             inputProps={{ min: 0 }}
             value={amount}
@@ -85,9 +86,11 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
             Convert
           </Button>
           <TextField
+            label='Result'
             style={{ margin: '15px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' }}
             id='outlined-read-only-input'
             value={result}
+            InputLabelProps={{ shrink: true }}
             InputProps={{
               readOnly: true,
             }}
