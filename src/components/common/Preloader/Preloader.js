@@ -2,12 +2,11 @@ import preloader from '../../../assets/preloader.svg'
 
 const style = {
   position: 'absolute',
-  left: '0',
-  right: '0',
+  left: '50%',
   top: '20%',
-  marginLeft: 'auto',
-  marginRight: 'auto',
+  marginLeft: '-50px',
   width: '100px',
+  height: '100px',
   zIndex: '999',
 }
 let Preloader = (props) => {

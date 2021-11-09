@@ -79,7 +79,7 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
               borderRadius: '10em',
             }}
             variant='outlined'
-            disabled={!convertingInProgress || amount === 0}
+            disabled={!convertingInProgress || amount <= 0}
             // отключаем кнопку при запросе или если значение равно 0
             onClick={onClick}>
             Convert

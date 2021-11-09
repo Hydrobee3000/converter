@@ -1,4 +1,4 @@
-import { MenuItem, Paper, Select } from '@mui/material'
+import { Paper } from '@mui/material'
 import React, { useEffect } from 'react'
 import { styled } from '@mui/material/styles'
 import Table from '@mui/material/Table'
@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRateCurrencies, setBaseCurrency } from '../redux/currencyReducer'
+import { getRateCurrencies } from '../redux/currencyReducer'
 import Preloader from './common/Preloader/Preloader'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -23,7 +23,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
+    height: '100px',
   },
+  height: '100px',
+
   // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
@@ -48,10 +51,10 @@ const SecondPage = ({ baseCurrency, currencies }) => {
     <TableContainer style={{ display: 'flex' }} component={Paper}>
       <Table sx={{ maxWidth: '70%' }} aria-label='customized table'>
         <TableHead>
-          <TableRow>
+          <StyledTableRow>
             <StyledTableCell align='center'>Name</StyledTableCell>
             <StyledTableCell align='left'>Currency</StyledTableCell>
-          </TableRow>
+          </StyledTableRow>
         </TableHead>
         <TableBody>
           {currencies.map((currency, i) => (
@@ -64,10 +67,10 @@ const SecondPage = ({ baseCurrency, currencies }) => {
       </Table>
       <Table sx={{ maxWidth: '30%' }} aria-label='customized table'>
         <TableHead>
-          <TableRow>
+          <StyledTableRow>
             <StyledTableCell align='center'>From</StyledTableCell>
             <StyledTableCell align='center'>Rate</StyledTableCell>
-          </TableRow>
+          </StyledTableRow>
         </TableHead>
         <TableBody>
           {Object.values(rateCurrencies).map((rate, i) => (
