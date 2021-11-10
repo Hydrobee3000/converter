@@ -81,7 +81,7 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
             }}
             variant='outlined'
             disabled={!convertingInProgress || amount <= 0}
-            // отключаем кнопку при запросе или если значение равно 0
+            // отключаем кнопку при запросе или если значение меньше или равно 0
             onClick={onClick}>
             Convert
           </Button>

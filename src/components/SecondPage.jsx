@@ -41,7 +41,6 @@ const SecondPage = ({ baseCurrency, currencies }) => {
   }, [baseCurrency, dispatch])
 
   const rateCurrencies = useSelector((state) => state.currency.rateCurrencies)
-  console.log(rateCurrencies)
 
   if (rateCurrencies == null) {
     return <Preloader />

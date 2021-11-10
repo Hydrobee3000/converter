@@ -30,7 +30,7 @@ const Header = ({ baseCurrency }) => {
             }}
             style={{ textDecoration: 'none' }}
             to='/converter'>
-            <StyledBreadcrumb component='a' label='Converter' />
+            <StyledBreadcrumb label='Converter' />
           </NavLink>
           <NavLink
             activeStyle={{
@@ -38,7 +38,7 @@ const Header = ({ baseCurrency }) => {
             }}
             style={{ textDecoration: 'none' }}
             to='/current-currency'>
-            <StyledBreadcrumb component='a' label='Сurrent rate' />
+            <StyledBreadcrumb label='Сurrent rate' />
           </NavLink>
           <Select
             style={{
