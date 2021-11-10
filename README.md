@@ -1,4 +1,4 @@
-# Currency Convert project on React/Redux
+# Currency Convert project on `React/Redux`
 
 
 ## Demo
