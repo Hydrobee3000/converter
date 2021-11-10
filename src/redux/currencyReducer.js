@@ -164,8 +164,8 @@ let initialState = {
   rateCurrencies: null,
   baseCurrency: null,
   toCurrency: 'EUR',
-  amount: null,
-  result: null,
+  amount: '',
+  result: '',
   isFetching: true,
 }
 

@@ -39,6 +39,8 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
               shrink: true,
             }}
           />
+        </FormControl>
+        <FormControl fullWidth>
           <Select
             style={{ margin: '15px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' }}
             id='demo-simple-select'
@@ -48,6 +50,8 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
             <MenuItem value={'RUB'}>RUB</MenuItem>
             <MenuItem value={'USD'}>USD </MenuItem>
           </Select>
+        </FormControl>
+        <FormControl fullWidth>
           <TextField
             style={{ width: '3em', alignSelf: 'center', backgroundColor: 'white' }}
             id='outlined-read-only-input'
@@ -56,6 +60,8 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
               readOnly: true,
             }}
           />
+        </FormControl>
+        <FormControl fullWidth>
           <Select
             style={{ margin: '15px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' }}
             id='demo-simple-select'
@@ -70,6 +76,8 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
               )
             })}
           </Select>
+        </FormControl>
+        <FormControl fullWidth>
           <Button
             style={{
               margin: '10px 0',
@@ -85,6 +93,8 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
             onClick={onClick}>
             Convert
           </Button>
+        </FormControl>
+        <FormControl fullWidth>
           <TextField
             label='Result'
             style={{ margin: '15px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' }}
