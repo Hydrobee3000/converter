@@ -1,9 +1,10 @@
-import { Button, FormControl, MenuItem, Paper, Select, TextField } from '@mui/material'
+import { FormControl, MenuItem, Paper, Select, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getConvert, setAmount, setToCurrency } from './../redux/currencyReducer'
 import { setBaseCurrency } from './../redux/currencyReducer'
+import LoadingButton from '@mui/lab/LoadingButton'
 
 const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgress }) => {
   const dispatch = useDispatch()
@@ -78,7 +79,7 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
           </Select>
         </FormControl>
         <FormControl fullWidth>
-          <Button
+          <LoadingButton
             style={{
               margin: '10px 0',
               width: '15em',
@@ -90,15 +91,17 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
             variant='outlined'
             disabled={!convertingInProgress || amount <= 0}
             // отключаем кнопку при запросе или если значение меньше или равно 0
-            onClick={onClick}>
+            onClick={onClick}
+            loading={!convertingInProgress}
+            loadingPosition='start'>
             Convert
-          </Button>
+          </LoadingButton>
         </FormControl>
         <FormControl fullWidth>
           <TextField
-            label='Result'
-            style={{ margin: '15px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' }}
             id='outlined-read-only-input'
+            style={{ margin: '15px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' }}
+            label='Result'
             value={result}
             InputLabelProps={{ shrink: true }}
             InputProps={{
