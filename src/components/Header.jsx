@@ -21,7 +21,7 @@ const Header = ({ baseCurrency }) => {
   const dispatch = useDispatch()
 
   return (
-    <AppBar position='static'>
+    <AppBar style={{ backgroundColor: '#2b7a78' }} position='static'>
       <Toolbar style={{ display: 'flex', justifyContent: 'center', margin: '17px 0' }}>
         <Breadcrumbs aria-label='breadcrumb'>
           <NavLink
