@@ -8,10 +8,11 @@ import LoadingButton from '@mui/lab/LoadingButton'
 
 const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgress }) => {
   const dispatch = useDispatch()
-  const toCurrency = useSelector((state) => state.currency.toCurrency)
-  const result = useSelector((state) => state.currency.result)
-  const amount = useSelector((state) => state.currency.amount)
+  const toCurrency = useSelector((state) => state.currency.toCurrency) //значение валюты в которую конвертируем
+  const result = useSelector((state) => state.currency.result) //значение результата
+  const amount = useSelector((state) => state.currency.amount) //значение введенной суммы
 
+  //запрос при нажатии на кнопку
   const onClick = useCallback(
     () => dispatch(getConvert(baseCurrency, toCurrency, amount)),
     [dispatch, baseCurrency, toCurrency, amount]

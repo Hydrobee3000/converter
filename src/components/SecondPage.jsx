@@ -35,17 +35,17 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const SecondPage = ({ baseCurrency, currencies }) => {
   const dispatch = useDispatch()
-
+  //запрос на получение ставок валют
   useEffect(() => {
     dispatch(getRateCurrencies(baseCurrency))
   }, [baseCurrency, dispatch])
 
-  const rateCurrencies = useSelector((state) => state.currency.rateCurrencies)
+  const rateCurrencies = useSelector((state) => state.currency.rateCurrencies) //значение ставок валют
 
   if (rateCurrencies == null) {
+    // если ставка еще не загрузилась, показывать загрузку
     return <Preloader />
   }
-  // если ставка еще не загрузилась, показывать загрузку
   return (
     <TableContainer style={{ display: 'flex' }} component={Paper}>
       <Table sx={{ maxWidth: '70%' }} aria-label='customized table'>
