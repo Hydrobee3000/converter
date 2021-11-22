@@ -6,31 +6,42 @@ import { getConvert, setAmount, setToCurrency } from './../redux/currencyReducer
 import { setBaseCurrency } from './../redux/currencyReducer'
 import LoadingButton from '@mui/lab/LoadingButton'
 
+//основные стили
+const style = {
+  amountField: { margin: '30px 0 10px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' },
+  select: { margin: '15px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' },
+  preposition: { width: '3em', alignSelf: 'center', backgroundColor: 'white' },
+  loadingButton: {
+    margin: '10px 0',
+    width: '15em',
+    height: '4em',
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    borderRadius: '10em',
+  },
+  result: { margin: '15px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' },
+}
+
 const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgress }) => {
   const dispatch = useDispatch()
   const toCurrency = useSelector((state) => state.currency.toCurrency) //значение валюты в которую конвертируем
   const result = useSelector((state) => state.currency.result) //значение результата
   const amount = useSelector((state) => state.currency.amount) //значение введенной суммы
 
-  //запрос при нажатии на кнопку
+  //запрос результата при нажатии на кнопку
   const onClick = useCallback(
     () => dispatch(getConvert(baseCurrency, toCurrency, amount)),
     [dispatch, baseCurrency, toCurrency, amount]
   )
 
-  // document.addEventListener('keydown', function (event) {
-  //   if (event.code === 'Enter') {
-  //     onClick()
-  //   }
-  // })
-
   return (
     <Paper style={{ height: '700px', backgroundColor: '#f6fdfc', display: 'flex', flexDirection: 'column' }}>
       <Box component='form'>
+        {/* поле ввода стоимости */}
         <FormControl fullWidth>
           <TextField
             placeholder='Enter the number'
-            style={{ margin: '30px 0 10px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' }}
+            style={style.amountField}
             id='outlined-number'
             label='Amount'
             type='number'
@@ -42,9 +53,10 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
             }}
           />
         </FormControl>
+        {/* выбор валюты ИЗ которой будет конвертироваться */}
         <FormControl fullWidth>
           <Select
-            style={{ margin: '15px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' }}
+            style={style.select}
             id='demo-simple-select'
             value={baseCurrency}
             onChange={(e) => dispatch(setBaseCurrency(e.target.value))}>
@@ -53,9 +65,10 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
             <MenuItem value={'USD'}>USD </MenuItem>
           </Select>
         </FormControl>
+        {/* предлог 'in' */}
         <FormControl fullWidth>
           <TextField
-            style={{ width: '3em', alignSelf: 'center', backgroundColor: 'white' }}
+            style={style.preposition}
             id='outlined-read-only-input'
             value='in'
             InputProps={{
@@ -63,9 +76,10 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
             }}
           />
         </FormControl>
+        {/* выбор валюты В которую будет конвертироваться */}
         <FormControl fullWidth>
           <Select
-            style={{ margin: '15px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' }}
+            style={style.select}
             id='demo-simple-select'
             value={toCurrency}
             onChange={(e) => dispatch(setToCurrency(e.target.value))}>
@@ -79,16 +93,10 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
             })}
           </Select>
         </FormControl>
+        {/* кнопка */}
         <FormControl fullWidth>
           <LoadingButton
-            style={{
-              margin: '10px 0',
-              width: '15em',
-              height: '4em',
-              alignSelf: 'center',
-              backgroundColor: 'white',
-              borderRadius: '10em',
-            }}
+            style={style.loadingButton}
             variant='outlined'
             disabled={!convertingInProgress || amount <= 0}
             // отключаем кнопку при запросе или если значение меньше или равно 0
@@ -98,10 +106,11 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
             Convert
           </LoadingButton>
         </FormControl>
+        {/* вывод результата */}
         <FormControl fullWidth>
           <TextField
             id='outlined-read-only-input'
-            style={{ margin: '15px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' }}
+            style={style.result}
             label='Result'
             value={result}
             InputLabelProps={{ shrink: true }}

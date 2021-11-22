@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getRateCurrencies } from '../redux/currencyReducer'
 import Preloader from './common/Preloader/Preloader'
 
+//стили для столбцов таблицы
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -20,6 +21,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
   },
 }))
+//стили для строк таблицы
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
@@ -35,7 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const SecondPage = ({ baseCurrency, currencies }) => {
   const dispatch = useDispatch()
-  //запрос на получение ставок валют
+  //запрос на получение ставок валют при изменении базовой валюты
   useEffect(() => {
     dispatch(getRateCurrencies(baseCurrency))
   }, [baseCurrency, dispatch])
@@ -43,7 +45,7 @@ const SecondPage = ({ baseCurrency, currencies }) => {
   const rateCurrencies = useSelector((state) => state.currency.rateCurrencies) //значение ставок валют
 
   if (rateCurrencies == null) {
-    // если ставка еще не загрузилась, показывать загрузку
+    // если данные ставок еще не пришли, показывать загрузку
     return <Preloader />
   }
   return (

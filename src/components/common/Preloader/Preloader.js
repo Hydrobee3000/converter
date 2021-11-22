@@ -9,7 +9,8 @@ const style = {
   height: '100px',
   zIndex: '999',
 }
-let Preloader = (props) => {
+
+const Preloader = (props) => {
   return (
     <div style={style}>
       <img src={preloader} alt='preloader' />

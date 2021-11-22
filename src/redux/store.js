@@ -7,6 +7,7 @@ let rootReducer = combineReducers({
   currency: currencyReducer,
 })
 
+//создание стора с расширением redux, c промежуточным уровнем redux-thunk
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
 export default store

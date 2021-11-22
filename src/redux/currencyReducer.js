@@ -160,13 +160,13 @@ let initialState = {
     { name: 'YER', rate: null, fullName: 'Yemeni Rial' },
     { name: 'ZAR', rate: null, fullName: 'South African Rand' },
     { name: 'ZMW', rate: null, fullName: 'Zambian Kwacha' },
-  ],
-  rateCurrencies: null,
-  baseCurrency: null,
-  toCurrency: 'EUR',
-  amount: '',
-  result: '',
-  isFetching: true,
+  ], //данные о всех валютах
+  rateCurrencies: null, //данные о всех ставках
+  baseCurrency: null, //базовая валюта
+  toCurrency: 'EUR', //валюта В которую переводим
+  amount: '', //введенное количество валюты
+  result: '', //результат
+  isFetching: true, //запрашивает ли?
 }
 
 const currencyReducer = (state = initialState, action) => {
@@ -217,12 +217,13 @@ const currencyReducer = (state = initialState, action) => {
   }
 }
 
-export const setCurrencies = (currencies) => ({ type: SET_CURRENCIES, currencies })
-export const setRateCurrencies = (rateCurrencies) => ({ type: SET_RATE_CURRENCIES, rateCurrencies })
-export const setResult = (result) => ({ type: SET_RESULT, result })
-export const setAmount = (amount) => ({ type: SET_AMOUNT, amount })
-export const setToCurrency = (toCurrency) => ({ type: TO_CURRENCY, toCurrency })
-export const setBaseCurrency = (baseCurrency) => ({ type: SET_BASE_CURRENCY, baseCurrency })
+export const setCurrencies = (currencies) => ({ type: SET_CURRENCIES, currencies }) //установить данные валют
+export const setRateCurrencies = (rateCurrencies) => ({ type: SET_RATE_CURRENCIES, rateCurrencies }) //установить данные ставок
+export const setResult = (result) => ({ type: SET_RESULT, result }) //установить данные резльтата
+export const setAmount = (amount) => ({ type: SET_AMOUNT, amount }) //установить данные введенного количества
+export const setToCurrency = (toCurrency) => ({ type: TO_CURRENCY, toCurrency }) //установить валюту В которую произойдет конвертация
+export const setBaseCurrency = (baseCurrency) => ({ type: SET_BASE_CURRENCY, baseCurrency }) //установить базовую валюту
+//происходит ли запрос данных
 export const toggleIsFetching = (isFetching) => ({
   type: TOGGLE_IS_FETCHING,
   isFetching,
