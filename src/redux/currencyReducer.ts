@@ -1,12 +1,6 @@
+import { Dispatch } from 'redux'
 import { currencyAPI } from '../components/api/api'
-
-const SET_CURRENCIES = 'SET_CURRENCIES'
-const SET_RATE_CURRENCIES = 'SET_RATE_CURRENCIES'
-const SET_BASE_CURRENCY = 'SET_BASE_CURRENCY'
-const TO_CURRENCY = 'TO_CURRENCY'
-const SET_AMOUNT = 'SET_AMOUNT'
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
-const SET_RESULT = 'SET_RESULT'
+import { CurrencyAction, CurrencyActionTypes, CurrencyState } from '../types/Currency'
 
 const initialState: CurrencyState = {
   currencies: [
@@ -216,21 +210,29 @@ const currencyReducer = (state = initialState, action: CurrencyAction): Currency
   }
 }
 
-export const setCurrencies = (currencies) => ({ type: SET_CURRENCIES, payload: currencies }) //установить данные валют
-export const setRateCurrencies = (rateCurrencies) => ({ type: SET_RATE_CURRENCIES, payload: rateCurrencies }) //установить данные ставок
-export const setResult = (result) => ({ type: SET_RESULT, payload: result }) //установить данные резльтата
-export const setAmount = (amount) => ({ type: SET_AMOUNT, payload: amount }) //установить данные введенного количества
-export const setToCurrency = (toCurrency) => ({ type: TO_CURRENCY, payload: toCurrency }) //установить валюту В которую произойдет конвертация
-export const setBaseCurrency = (baseCurrency) => ({ type: SET_BASE_CURRENCY, payload: baseCurrency }) //установить базовую валюту
+//установить данные валют
+export const setCurrencies = (currencies: object[]): CurrencyAction => ({
+  type: CurrencyActionTypes.SET_CURRENCIES,
+  payload: currencies,
+})
+//установить данные ставок
+export const setRateCurrencies = (rateCurrencies: object): CurrencyAction => ({
+  type: CurrencyActionTypes.SET_RATE_CURRENCIES,
+  payload: rateCurrencies,
+})
+export const setResult = (result: number): CurrencyAction => ({ type: CurrencyActionTypes.SET_RESULT, payload: result }) //установить данные резльтата
+export const setAmount = (amount: number) => ({ type: CurrencyActionTypes.SET_AMOUNT, payload: amount }) //установить данные введенного количества
+export const setToCurrency = (toCurrency: number) => ({ type: CurrencyActionTypes.TO_CURRENCY, payload: toCurrency }) //установить валюту В которую произойдет конвертация
+export const setBaseCurrency = (baseCurrency: number) => ({ type: CurrencyActionTypes.SET_BASE_CURRENCY, payload: baseCurrency }) //установить базовую валюту
 //происходит ли запрос данных
-export const toggleIsFetching = (isFetching) => ({
-  type: TOGGLE_IS_FETCHING,
-  isFetching,
+export const toggleIsFetching = (isFetching: boolean): CurrencyAction => ({
+  type: CurrencyActionTypes.TOGGLE_IS_FETCHING,
+  payload: isFetching,
 })
 
 //получение данных всех валют
 export const getCurrencies = () => {
-  return async (dispatch) => {
+  return async (dispatch: Dispatch<CurrencyAction>) => {
     try {
       let response = await currencyAPI.getAllCurrencies()
       dispatch(setCurrencies(response.data.results))
@@ -241,8 +243,8 @@ export const getCurrencies = () => {
 }
 
 //получениe ставки всех валют валют относительно базовой валюты
-export const getRateCurrencies = (baseCurrency) => {
-  return async (dispatch) => {
+export const getRateCurrencies = (baseCurrency: string) => {
+  return async (dispatch: Dispatch<CurrencyAction>) => {
     try {
       dispatch(toggleIsFetching(false))
 
@@ -256,8 +258,8 @@ export const getRateCurrencies = (baseCurrency) => {
   }
 }
 //получениe результата
-export const getConvert = (baseCurrency, toCurrency, amount) => {
-  return async (dispatch) => {
+export const getConvert = (baseCurrency: string, toCurrency: string, amount: number) => {
+  return async (dispatch: Dispatch<CurrencyAction>) => {
     try {
       dispatch(toggleIsFetching(false))
       let response = await currencyAPI.getResult(baseCurrency, toCurrency, amount)
