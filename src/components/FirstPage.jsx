@@ -19,6 +19,7 @@ const style = {
     backgroundColor: 'white',
     borderRadius: '10em',
   },
+  paper: { height: '700px', backgroundColor: '#f6fdfc', display: 'flex', flexDirection: 'column' },
   result: { margin: '15px 0', width: '14em', alignSelf: 'center', backgroundColor: 'white' },
 }
 
@@ -35,7 +36,7 @@ const FirstPage = ({ baseCurrency, currencies, rateCurrencies, convertingInProgr
   )
 
   return (
-    <Paper style={{ height: '700px', backgroundColor: '#f6fdfc', display: 'flex', flexDirection: 'column' }}>
+    <Paper style={style.paper}>
       <Box component='form'>
         {/* поле ввода стоимости */}
         <FormControl fullWidth>

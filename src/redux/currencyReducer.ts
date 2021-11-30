@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import { currencyAPI } from '../components/api/api'
-import { CurrencyAction, CurrencyActionTypes, CurrencyState } from '../types/Currency'
+import { CurrencyAction, CurrencyActionTypes, CurrencyState } from '../types/currency'
 
 const initialState: CurrencyState = {
   currencies: [
