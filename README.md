@@ -13,7 +13,11 @@
 
 # Инструкция по установке <a name="Setup-info"></a>
 
-- Клонировать репозиторий
+> Клонировать репозиторий
+>    ```sh
+>    git clone https://github.com/Hydrobee3000/converter.git
+>    ```
+>    
 - Установить зависимости `npm install`
 - Запустить проект (development) `npm start`
 - Собрать проект (production) `npm run build`
