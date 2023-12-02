@@ -18,7 +18,10 @@
 >    git clone https://github.com/Hydrobee3000/converter.git
 >    ```
 >    
-- Установить зависимости `npm install`
+> Установить зависимости
+>    ```sh
+>    npm install
+>    ```
 - Запустить проект (development) `npm start`
 - Собрать проект (production) `npm run build`
 
