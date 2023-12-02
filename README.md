@@ -22,7 +22,11 @@
 >    ```sh
 >    npm install
 >    ```
-- Запустить проект (development) `npm start`
+> Запустить проект
+>    ```sh
+>    npm start
+>    ```
+
 - Собрать проект (production) `npm run build`
 
 ***
