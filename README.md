@@ -26,8 +26,10 @@
 >    ```sh
 >    npm start
 >    ```
-
-- Собрать проект (production) `npm run build`
+> Запустить проект
+>    ```sh
+>    npm start
+>    ```
 
 ***
 
